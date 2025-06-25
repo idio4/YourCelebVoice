@@ -312,6 +312,20 @@ h1 {
   text-align: center;
 }
 
+.celeb-avatar-link {
+  display: block;
+  margin-bottom: 8px;
+}
+.celeb-avatar-link .celeb-image {
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+.celeb-avatar-link:hover .celeb-image,
+.celeb-avatar-link:focus .celeb-image {
+  transform: scale(1.06);
+  box-shadow: 0 4px 16px rgba(124, 77, 255, 0.18);
+}
+
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;

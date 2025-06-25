@@ -13,6 +13,14 @@ const MOCK_LEADERBOARD = [
   { name: 'Taylor Swift', count: 55 },
 ];
 
+const YOUTUBE_VIDEOS = [
+  'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  'https://www.youtube.com/watch?v=3JZ_D3ELwOQ',
+  'https://www.youtube.com/watch?v=9bZkp7q19f0',
+  'https://www.youtube.com/watch?v=L_jWHffIx5E',
+  'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
+];
+
 function App() {
   const [audioFile, setAudioFile] = useState(null);
   const [result, setResult] = useState(null);
@@ -26,6 +34,7 @@ function App() {
   const audioRef = useRef(null);
   const chunksRef = useRef([]);
   const [mediaStream, setMediaStream] = useState(null);
+  const [youtubeUrl, setYoutubeUrl] = useState(YOUTUBE_VIDEOS[0]);
 
   const handleFileChange = (e) => {
     setAudioFile(e.target.files[0]);
@@ -38,11 +47,14 @@ function App() {
     if (!audioFile && !recordedAudio) return;
     setLoading(true);
     const fileToUse = audioFile || recordedAudio;
+    // Pick a random YouTube video for the result
+    const randomUrl = YOUTUBE_VIDEOS[Math.floor(Math.random() * YOUTUBE_VIDEOS.length)];
     setTimeout(() => {
       setResult({
         image: 'https://randomuser.me/api/portraits/men/32.jpg',
         audio: URL.createObjectURL(fileToUse),
       });
+      setYoutubeUrl(randomUrl);
       setLoading(false);
     }, 2000);
   };
@@ -174,7 +186,16 @@ function App() {
       {page === 'upload' && result && (
         <div className="result-section">
           <div className="celeb-name-large">Shelby</div>
-          <img src={result.image} alt="Celebrity" className="celeb-image" />
+          <a
+            href={youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Watch the YouTube video from which this voice was taken"
+            className="celeb-avatar-link"
+            style={{ textDecoration: 'none' }}
+          >
+            <img src={result.image} alt="Celebrity" className="celeb-image" />
+          </a>
           <div className="audio-scroll-wrapper">
             <audio
               ref={audioRef}
