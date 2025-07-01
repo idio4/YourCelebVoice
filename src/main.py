@@ -114,6 +114,7 @@ async def handle_feedback(q: CallbackQuery) -> None:
         ("feedback", vid, actor, hit),
     )
     conn.commit()
+    await callback.message.edit_reply_markup(reply_markup=None)
     await q.answer("Thanks!")
 
 
