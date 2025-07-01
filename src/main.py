@@ -132,7 +132,7 @@ async def show_metrics(message: Message) -> None:
     )
     row = cursor.fetchone()
     impressions, feedbacks, likes, dislikes, avg_rank = row
-    ctr = feedbacks / impressions if impressions else 0
+    ctr = likes / (likes + dislikes) if (likes + dislikes) else 0
     bounce = (impressions - feedbacks) / impressions if impressions else 0
     text = (
         f"Total Impressions: {impressions}\n"
